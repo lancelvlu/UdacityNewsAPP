@@ -1,0 +1,10 @@
+<!--pages/news-detail/news-detail.wxml-->
+<view class="title">{{newsTitle}}</view>
+  <view class="newsHead">{{readCount}}</view>
+  <view class="newsHead">{{newsDate}}</view>
+  <view class="newsHead">{{newsSource}}</view>
+<view class="content-detail" wx:for="{{newsContents}}" wx:key="newsContents">
+  <view class="strong" wx:if="{{item.type=='strong'}}">{{item.text}}</view>
+  <view class="p" wx:if="{{item.type=='p'}}">{{item.text}}</view>
+  <image class="img" wx:if="{{item.type=='image'}}" src="{{item.src}}" mode="widthFix"></image>
+</view>
