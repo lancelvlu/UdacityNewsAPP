@@ -1,3 +1,5 @@
+//顶部导航tab和下方的滑动切换参考https://blog.csdn.net/Sophie_U/article/details/71745125?fps=1&locationNum=1
+
 const typeName = {
   0: "gn",
   1: "gj",
