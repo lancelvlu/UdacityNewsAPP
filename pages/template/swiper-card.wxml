@@ -1,0 +1,18 @@
+
+<template name="swiper-item">
+  <swiper-item>
+    <view class="slide-nav" bindtap='onTapNewsDetail' data-id="{{item.hotTopicId}}" >
+    <image class="hot-label" src="/images/hot-label.png" mode="aspectFill"/>
+    <image class="hot-cover" src="{{item.hotTopicCover}}" mode="aspectFill"/>
+    <text class="title">{{item.hotTopicTitle}}</text>
+    </view>
+  </swiper-item>
+</template>
+
+<template name="swiper">
+  <swiper class="swiper" autoplay="true" interval="5000" duration="1000" indicator-dots="true">
+    <block wx:for="{{myData}}" wx:key="id">
+      <template is="swiper-item" data="{{item}}" />
+    </block>
+  </swiper>
+</template>

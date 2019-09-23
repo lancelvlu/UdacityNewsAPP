@@ -1,4 +1,5 @@
 //顶部导航tab和下方的滑动切换参考https://blog.csdn.net/Sophie_U/article/details/71745125?fps=1&locationNum=1
+const app = getApp()
 
 const typeName = {
   0: "gn",
@@ -15,6 +16,7 @@ let helperFunc = require("../../utils/util")
 
 Page({
   data: {
+    loadHidden: false,
     defaultCoverPath: "/images/default-cover.jpeg",
     winHeight: "",//窗口高度
     currentTab: 0, //初始的tab标签
@@ -25,8 +27,13 @@ Page({
     { label: 3, abbre: "yl", name: "娱乐" },
     { label: 4, abbre: "js", name: "军事" },
     { label: 5, abbre: "ty", name: "体育" },
-    { label: 6, abbre: "other", name: "其他" }]
+    { label: 6, abbre: "other", name: "其他" }],
+    navBarInfo: {
+      pageType: 1,
+      pageTitle: "有信儿了",
+    },
   },
+
   // 滚动切换标签样式
   switchTab: function (e) {
     this.setData({
@@ -59,6 +66,12 @@ Page({
     }
   },
 
+  onPullDownRefresh: function () {
+    this.getNewsList(() => {
+      wx.stopPullDownRefresh()
+    })
+  },
+  
   getNewsList(callback) {
     wx.request({
       url: 'https://test-miniprogram.com/api/news/list',
@@ -68,6 +81,7 @@ Page({
       success: (res) => {
         let results = res.data.result;
         this.setListData(results)
+        // console.log(results)
       },
       complete: () => {
         callback && callback()
@@ -106,6 +120,7 @@ Page({
       { newsContent: newsContent }
     )
   },
+
   onTapNewsDetail(event) {
     this.setData({
       news_id: event.currentTarget.dataset.id
@@ -116,18 +131,48 @@ Page({
     })
   },
   onLoad: function () {
+    this.getHotTopic()
+    // console.log(this.data.hotTopic.length)
+    // console.log(this.data.hotTopic)
     this.getNewsList()
     // 计算自适应屏幕高度
     wx.getSystemInfo({
       success: (res) => {
-        let clientHeight = res.windowHeight, clientWidth = res.windowWidth, rpxR = 750 / clientWidth;
-        let winHeight = clientHeight * rpxR * 0.9;
+        console.log(app.globalData.rpxRate)
+        // let clientHeight = res.windowHeight, clientWidth = res.windowWidth, rpxR = 750 / clientWidth;
+        let winHeight = (app.globalData.clientHeight - app.globalData.navHeight)* app.globalData.rpxRate - 440;
         this.setData({
           winHeight: winHeight
         });
       }
     });
   },
+  getHotTopic() {
+    let tempList = []
+    var tempList2 = []
+    for (let item of this.data.tabList) {
+      tempList.push(helperFunc.hotTopicListHelper(item.abbre))
+    }
+    Promise.all(tempList).then((result) => {
+      let tempList_inner = []
+      for (let item of result) {
+        tempList_inner = tempList_inner.concat(item)
+      }
+      let detailPromiseList = []
+      for (let item of tempList_inner) {
+        detailPromiseList.push(helperFunc.hotTopicDetailHelper(item))
+      }
+      Promise.all(detailPromiseList).then((results) => {
+        let totalNewsInfoList = results.sort((a, b) => { return b.readCount - a.readCount })
+        this.setData({
+          loadHidden: true,
+          myData: totalNewsInfoList.slice(0, 3)
+        })
+        console.log(this.data.myData)
+      })
+    })
+  },
+
   onPullDownRefresh: function(){
     this.getNewsList(() => {
       wx.stopPullDownRefresh()

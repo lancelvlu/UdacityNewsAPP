@@ -7,8 +7,9 @@
     background: #F7F7F7; 
     font-size: 16px; 
     white-space: nowrap;
-    position: fixed;
-    top: 0; left: 0;
+    position: relative;
+    /* top: 0;  */
+    left: 0;
     z-index: 99;
     }
 
@@ -62,7 +63,7 @@
   }
 
 .tab-content{
-  margin-top: 80rpx;
+  margin-top: 0rpx;
   }
 
 .scoll-h{
@@ -74,4 +75,8 @@
   height: 150rpx;
   padding-left: 10rpx;
   padding-right: 10rpx;
+}
+
+.head{
+  position: relative;
 }
