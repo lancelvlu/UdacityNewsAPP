@@ -8,16 +8,18 @@
   <customNav inner-text="{{navBarInfo}}"></customNav>
 </view>
 
-<view class="head">
+<!-- <view class="head">
   <template is="swiper" data="{{myData}}"></template>
-</view>
+</view> -->
 
 <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}" scroll-with-animation="false">
-<view wx:for="{{tabList}}" wx:key="label" class="tab-item {{currentTab==item.label?'active':''}}"  data-current="{{item.label}}" bindtap="switchNav">{{item.name}}</view>
+  <view wx:for="{{tabList}}" wx:key="label" class="tab-item {{currentTab==item.label?'active':''}}"  data-current="{{item.label}}" bindtap="switchNav">{{item.name}}</view>
 </scroll-view>
+<view class="head">
+    <template is="swiper" data="{{myData}}"></template>
+</view>
 <!-- swiper默认高度150rpx，这里height自适应屏幕高度 -->
-<swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab"
-  style="height:{{winHeight}}rpx">
+<swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
   <block wx:for="{{tabList}}" wx:key="label">
     <swiper-item>
         <scroll-view scroll-y="true" class="scoll-h" >
@@ -33,5 +35,7 @@
             </block>
         </scroll-view>
     </swiper-item>
-  </block>
+  </block> 
 </swiper>
+
+<view class="bottomFlag" wx:if="{{bottomNoMoreLabel}}" style="padding-bottom:{{bottomPadding}}rpx">- 没有更多了 -</view>

@@ -32,6 +32,7 @@ Page({
       pageType: 1,
       pageTitle: "有信儿了",
     },
+    bottomNoMoreLabel: false,
   },
 
   // 滚动切换标签样式
@@ -66,12 +67,7 @@ Page({
     }
   },
 
-  onPullDownRefresh: function () {
-    this.getNewsList(() => {
-      wx.stopPullDownRefresh()
-    })
-  },
-  
+  //获取新闻列表
   getNewsList(callback) {
     wx.request({
       url: 'https://test-miniprogram.com/api/news/list',
@@ -80,8 +76,9 @@ Page({
       },
       success: (res) => {
         let results = res.data.result;
-        this.setListData(results)
-        // console.log(results)
+        this.setData({
+          newsContent: this.ListDataParser(results)
+        })
       },
       complete: () => {
         callback && callback()
@@ -89,16 +86,69 @@ Page({
     })
   },
 
-  imageErrorFunction: function (event) {
-    var index = event.currentTarget.dataset.index
-    // 将无法加载的封面替换为本地默认图片
-    var img = 'newsContent[' + index + '].coverImageUrl'
-    this.setData({
-      [img]: this.data.defaultCoverPath,
+  //刷新新闻列表
+  refreshNewsList(callback) {
+    wx.request({
+      url: 'https://test-miniprogram.com/api/news/list',
+      data: {
+        type: typeName[this.data.currentTab]
+      },
+      success: (res) => {
+        let results = res.data.result;
+        let tempNewList = this.ListDataParser(results)
+        if (tempNewList.length == this.data.newsContent.length){
+              this.setData(
+                { refreshNewLabel: true }
+              )
+            } else{
+              this.setData(
+                {
+                  newsContent: tempNewList, 
+                  refreshNewLabel: false
+                }
+              )
+            }  
+        },
+      complete: () => {
+        callback && callback()
+      }
     })
   },
 
-  setListData(results) {
+  //加载更多新闻
+  loadMoreNewsList() {
+    wx.request({
+      url: 'https://test-miniprogram.com/api/news/list',
+      data: {
+        type: typeName[this.data.currentTab]
+      },
+      success: (res) => {
+        console.log(this.data.botomPadding)
+        let results = res.data.result;
+        let tempNewList = this.ListDataParser(results)
+        let newsContent = this.data.newsContent
+        let oldLength = newsContent.length
+        let oldIdSet = new Set(this.data.newsContent.map(a => a.newsId))
+        for (let tempNews of tempNewList){
+          if (!oldIdSet.has(tempNews.newsId)){
+            newsContent.push(tempNews)
+          }
+        }
+        if (newsContent.length == oldLength){
+          this.setData({
+          bottomNoMoreLabel: true
+          })
+        } else{
+          this.setData({
+            newsContent: newsContent
+          })
+        }
+      },
+    })
+  },
+  
+  //对服务器返回的新闻列表信息进行解析
+  ListDataParser: function (results) {
     let newsContent = [];
     for (let item of results) {
       let newsDate = new Date(item.date);
@@ -116,37 +166,50 @@ Page({
         newsId: item.id
       })
     };
-    this.setData(
-      { newsContent: newsContent }
-    )
+    return newsContent
+  },
+
+  imageErrorFunction: function (event) {
+    var index = event.currentTarget.dataset.index
+    // 将无法加载的封面替换为本地默认图片
+    var img = 'newsContent[' + index + '].coverImageUrl'
+    this.setData({
+      [img]: this.data.defaultCoverPath,
+    })
   },
 
   onTapNewsDetail(event) {
     this.setData({
       news_id: event.currentTarget.dataset.id
     })
-
     wx.navigateTo({
       url: "/pages/news-detail/news-detail?news_id=" + this.data.news_id,
     })
   },
+
   onLoad: function () {
     this.getHotTopic()
-    // console.log(this.data.hotTopic.length)
-    // console.log(this.data.hotTopic)
     this.getNewsList()
-    // 计算自适应屏幕高度
+    // 根据不同的设备计算scroll-view的高度，目标为超出屏幕一点点，这样才能触发onReachBottom
     wx.getSystemInfo({
       success: (res) => {
-        console.log(app.globalData.rpxRate)
-        // let clientHeight = res.windowHeight, clientWidth = res.windowWidth, rpxR = 750 / clientWidth;
-        let winHeight = (app.globalData.clientHeight - app.globalData.navHeight)* app.globalData.rpxRate - 440;
+        // 设备总高度为 app.globalData.clientHeight, 单位px
+        // 新闻类别导航栏（class:tab-h）的高度为80rpx
+        // 热点新闻展示窗口（class:head）的高度为360rpx
+        // 预留50rpx确保所有内容超出一个屏幕
+        // 所有px通过乘rpxRate转换为rpx
+        let winHeight = (app.globalData.clientHeight - app.globalData.navHeight)* app.globalData.rpxRate - 360 - 80 + 50;
+        let bottomPadding = 0;
+        // iPhone X、iPhone XR等设备屏幕最下方系统自带条形图标会挡住某些内容，增加padding-bottom来避免 
+        if (app.globalData.deviceType == 1) { bottomPadding = 20}
         this.setData({
-          winHeight: winHeight
+          winHeight: winHeight,
+          bottomPadding: bottomPadding,
         });
       }
     });
   },
+  //获取所有页面信息并排序获得阅读量前三的新闻
   getHotTopic() {
     let tempList = []
     var tempList2 = []
@@ -168,14 +231,23 @@ Page({
           loadHidden: true,
           myData: totalNewsInfoList.slice(0, 3)
         })
-        console.log(this.data.myData)
       })
     })
   },
 
   onPullDownRefresh: function(){
-    this.getNewsList(() => {
+    this.refreshNewsList(() => {
       wx.stopPullDownRefresh()
-    })
+      // console.log(this.data.refreshNewLabel)
+      if (this.data.refreshNewLabel){
+        wx.showToast({
+          title: "没有新信儿了",
+          icon: "none",
+        })
+      }
+    }) 
   },
+  onReachBottom: function(){
+    this.loadMoreNewsList()
+  }
 })

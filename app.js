@@ -8,12 +8,16 @@ App({
         // 1.导航栏高度
         // 1.1 安卓
         let totalTopHeight = 68
+        let deviceType = 0
+        // console.log(res.model.indexOf('iPhone X'))
         if (res.model.indexOf('iPhone X') !== -1) {
           // 1.2\. iPhoneX 高度
           totalTopHeight = 88
+          deviceType = 1
         } else if (res.model.indexOf('iPhone') !== -1) {
           // 1.3 非iphoneX的 iphone 高度
           totalTopHeight = 64
+          deviceType = 2
         }
         //状态栏 高度
         vm.globalData.statusBarHeight = res.statusBarHeight
@@ -22,7 +26,8 @@ App({
         vm.globalData.rpxRate = rpxR;
         vm.globalData.clientHeight = clientHeight;
         vm.globalData.clientWidth = clientWidth;
-        console.log(vm.globalData.statusBarHeight)
+        vm.globalData.deviceType = deviceType;
+        // console.log(vm.globalData.statusBarHeight)
       },
 
       failure(res) {

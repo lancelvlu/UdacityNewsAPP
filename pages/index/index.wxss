@@ -5,7 +5,7 @@
     overflow: hidden;
     line-height: 80rpx;
     background: #F7F7F7; 
-    font-size: 16px; 
+    font-size: 32rpx; 
     white-space: nowrap;
     position: relative;
     /* top: 0;  */
@@ -63,7 +63,8 @@
   }
 
 .tab-content{
-  margin-top: 0rpx;
+  /* margin-top: 0rpx; */
+  position: relative;
   }
 
 .scoll-h{
@@ -79,4 +80,11 @@
 
 .head{
   position: relative;
+}
+
+.bottomFlag{
+  font-size: 25rpx;
+  line-height: 35rpx;
+  text-align: center;
+  color: #B0B0B0;
 }
