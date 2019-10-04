@@ -1,8 +1,16 @@
 <!--pages/news-detail/news-detail.wxml-->
+<loading hidden="{{loadHidden}}">
+  加载中...
+</loading>
+<view>
+  <customNav navbar-info="{{navBarInfo}}"></customNav>
+</view>
 <view class="title">{{newsTitle}}</view>
-  <view class="newsHead">{{readCount}}</view>
-  <view class="newsHead">{{newsDate}}</view>
-  <view class="newsHead">{{newsSource}}</view>
+<veiw class="newsHead">
+  <veiw class="newsSource">{{newsSource}}</veiw>
+  <veiw class="newsDate">{{newsDate}}</veiw>
+  <veiw class="readCount">{{readCount}}</veiw>
+</veiw>
 <view class="content-detail" wx:for="{{newsContents}}" wx:key="newsContents">
   <view class="strong" wx:if="{{item.type=='strong'}}">{{item.text}}</view>
   <view class="p" wx:if="{{item.type=='p'}}">{{item.text}}</view>

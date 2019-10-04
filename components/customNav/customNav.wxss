@@ -1,0 +1,42 @@
+.topbar {
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+}
+ 
+
+.navbar-v-line {
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  width: 2rpx;
+  height: 45rpx;
+  background-color: #e5e5e5;
+}
+
+.arrow-box {
+  padding-top: 20rpx;
+  display: flex;
+  width: 100%;
+}
+
+
+.arrow-box image {
+  width: 45rpx;
+  height: 45rpx;
+  margin-left:0rpx;
+  /* transform: rotateY(180deg); */
+}
+ 
+.input-box {
+  margin-left: 10rpx;
+  width: 60%;
+  /* height: 100%; */
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+ 
+
+

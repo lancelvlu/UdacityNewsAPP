@@ -7,7 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    loadHidden: false,
+    navBarInfo: {
+      pageType: 2,
+      pageTitle: "有信儿了",
+    },
   },
 
   /**
@@ -36,6 +40,9 @@ Page({
         let results = res.data.result;
         // console.log(results);
         this.setDetailData(results);
+        this.setData({
+          loadHidden: true,
+        })
       },
       complete: () => {
         callback && callback()
@@ -59,7 +66,11 @@ Page({
       picUrl: helperFunc.urlHelper(results.firstImage),
       readCount: `${results.readCount}阅读`,
       newsSource: results.source,
-      newsContents: tempContent
+      newsContents: tempContent,
+      navBarInfo: {
+        pageType: 2,
+        pageTitle: results.title,
+      },
     })
   }
 })

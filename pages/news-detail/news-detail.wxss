@@ -29,10 +29,26 @@ font-weight: bold;
 
 
 .newsHead {
-  font-size: 30rpx;
-  line-height: 42rpx;
+  display: flex;
+  font-size: 25rpx;
+  line-height: 35rpx;
   flex-grow: 2;
   color: #B0B0B0;
   padding: 0rpx 30rpx;
   text-align: left;
+}
+
+.newsSource{
+  width: 30%;
+  text-align: left;
+}
+
+.newsDate{
+  width: 50%;
+  text-align: left;
+}
+
+.readCount{
+  width: 20%;
+  text-align: right;
 }

@@ -5,10 +5,11 @@
     overflow: hidden;
     line-height: 80rpx;
     background: #F7F7F7; 
-    font-size: 16px; 
+    font-size: 32rpx; 
     white-space: nowrap;
-    position: fixed;
-    top: 0; left: 0;
+    position: relative;
+    /* top: 0;  */
+    left: 0;
     z-index: 99;
     }
 
@@ -62,7 +63,8 @@
   }
 
 .tab-content{
-  margin-top: 80rpx;
+  /* margin-top: 0rpx; */
+  position: relative;
   }
 
 .scoll-h{
@@ -74,4 +76,15 @@
   height: 150rpx;
   padding-left: 10rpx;
   padding-right: 10rpx;
+}
+
+.head{
+  position: relative;
+}
+
+.bottomFlag{
+  font-size: 25rpx;
+  line-height: 35rpx;
+  text-align: center;
+  color: #B0B0B0;
 }

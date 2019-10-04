@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "customNav": "/components/customNav/customNav"
+  }
 }

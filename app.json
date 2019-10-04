@@ -1,15 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs",
     "pages/news-detail/news-detail"
-  ],
+    ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "UdacityNews",
-    "navigationBarTextStyle": "black",
-    "enablePullDownRefresh": true
+    "navigationBarTitleText": "有信儿了",
+    "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
 }
