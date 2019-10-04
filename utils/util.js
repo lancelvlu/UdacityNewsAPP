@@ -23,6 +23,15 @@ function urlHelper(inputUrl) {
   }
 }
 
+function defaultHelper(inputItem, replaceItem) {
+  if (inputItem) {
+    return inputItem
+  }
+  else {
+    return replaceItem
+  }
+}
+
 const hotTopicListHelper = (newsType) => {
   // 返回一个Promise实例对象
   return new Promise((resolve, reject) => {
@@ -70,4 +79,5 @@ module.exports = {
   urlHelper: urlHelper,
   hotTopicListHelper: hotTopicListHelper,
   hotTopicDetailHelper: hotTopicDetailHelper,
+  defaultHelper: defaultHelper,
 }

@@ -18,6 +18,7 @@ Page({
   data: {
     loadHidden: false,
     defaultCoverPath: "/images/default-cover.jpeg",
+    defaultSource: "来自互联网",
     winHeight: "",//窗口高度
     currentTab: 0, //初始的tab标签
     scrollLeft: 0, //tab标签的滚动条位置
@@ -151,17 +152,11 @@ Page({
     let newsContent = [];
     for (let item of results) {
       let newsDate = new Date(item.date);
-      var coverPath = "";
-      if (item.firstImage) {
-        coverPath = helperFunc.urlHelper(item.firstImage);
-      } else {
-        coverPath = this.data.defaultCoverPath;
-      };
       newsContent.push({
         newsTitle: item.title,
         newsDate: `${newsDate.getFullYear()}-${newsDate.getMonth() + 1}-${newsDate.getDate()}`,
-        coverImageUrl: coverPath,
-        newsSource: item.source,
+        coverImageUrl: helperFunc.defaultHelper(item.firstImage, this.data.defaultCoverPath),
+        newsSource: helperFunc.defaultHelper(item.source, this.data.defaultSource),
         newsId: item.id
       })
     };

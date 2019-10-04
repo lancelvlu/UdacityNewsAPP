@@ -8,6 +8,7 @@ Page({
    */
   data: {
     loadHidden: false,
+    defaultSource:"来自互联网",
     navBarInfo: {
       pageType: 2,
       pageTitle: "有信儿了",
@@ -65,7 +66,8 @@ Page({
       newsDate: `${newsDate.getFullYear()}-${newsDate.getMonth() + 1}-${newsDate.getDate()}`,
       picUrl: helperFunc.urlHelper(results.firstImage),
       readCount: `${results.readCount}阅读`,
-      newsSource: results.source,
+      newsSource: helperFunc.defaultHelper(results.source, this.data.defaultSource),
+      // newsSource: results.source,
       newsContents: tempContent,
       navBarInfo: {
         pageType: 2,
