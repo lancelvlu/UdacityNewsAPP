@@ -123,7 +123,6 @@ Page({
         type: typeName[this.data.currentTab]
       },
       success: (res) => {
-        console.log(this.data.botomPadding)
         let results = res.data.result;
         let tempNewList = this.ListDataParser(results)
         let newsContent = this.data.newsContent

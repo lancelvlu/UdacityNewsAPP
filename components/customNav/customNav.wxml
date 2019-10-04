@@ -1,13 +1,10 @@
 <view class="topbar" style="padding-top:{{statusBarHeight}}rpx;height: {{titleBarHeight}}rpx">
   <view class="arrow-box">
-    <image bindtap="_navback" src="/images/navBar-back.jpeg" wx:if="{{innerText.pageType == 2}}"></image>
-
-    <view class='navbar-v-line' wx:if="{{innerText.pageType == 2}}"></view>
-    <!-- <view class='navbar-v-line' wx:if='{{!share}}'></view> -->
+    <image bindtap="_navback" src="/images/navBar-back.jpeg" wx:if="{{navbarInfo.pageType == 2}}"></image>
+    <view class='navbar-v-line' wx:if="{{navbarInfo.pageType == 2}}"></view>
     <image bindtap="_backhome" src="/images/navBar-home.jpeg"></image>
-
     <view class="input-box">
-      <text>{{innerText.pageTitle}}</text>
+      <text>{{navbarInfo.pageTitle}}</text>
     </view>
   </view>
 </view>

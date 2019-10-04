@@ -3,7 +3,7 @@
   加载中...
 </loading>
 <view>
-  <customNav inner-text="{{navBarInfo}}"></customNav>
+  <customNav navbar-info="{{navBarInfo}}"></customNav>
 </view>
 <view class="title">{{newsTitle}}</view>
 <veiw class="newsHead">

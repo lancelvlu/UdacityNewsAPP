@@ -5,19 +5,17 @@
   加载中...
 </loading>
 <view>
-  <customNav inner-text="{{navBarInfo}}"></customNav>
+  <customNav navbar-info="{{navBarInfo}}"></customNav>
 </view>
-
-<!-- <view class="head">
-  <template is="swiper" data="{{myData}}"></template>
-</view> -->
 
 <scroll-view scroll-x="true" class="tab-h" scroll-left="{{scrollLeft}}" scroll-with-animation="false">
   <view wx:for="{{tabList}}" wx:key="label" class="tab-item {{currentTab==item.label?'active':''}}"  data-current="{{item.label}}" bindtap="switchNav">{{item.name}}</view>
 </scroll-view>
+
 <view class="head">
     <template is="swiper" data="{{myData}}"></template>
 </view>
+
 <!-- swiper默认高度150rpx，这里height自适应屏幕高度 -->
 <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}rpx">
   <block wx:for="{{tabList}}" wx:key="label">

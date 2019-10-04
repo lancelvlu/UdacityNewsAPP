@@ -9,7 +9,7 @@ Page({
   data: {
     loadHidden: false,
     navBarInfo: {
-      pageType: 1,
+      pageType: 2,
       pageTitle: "有信儿了",
     },
   },

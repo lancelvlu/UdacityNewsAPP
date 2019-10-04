@@ -2,7 +2,7 @@ const app = getApp()
 Component({
   properties: {
     // 这里定义了innerText属性，属性值可以在组件使用时指定
-    innerText: {
+    navbarInfo: {
       type: Object,
       value: {
         // pageType为1则为首页，为2则为详情页，详情页提供返回按钮
@@ -13,12 +13,10 @@ Component({
   },
   data: {
     statusBarHeight: app.globalData.statusBarHeight * app.globalData.rpxRate,
-    // 这里是一些组件内部数据
-    titleBarHeight: app.globalData.titleBarHeight * app.globalData.rpxRate,
-    // someData: {}
+    titleBarHeight: app.globalData.titleBarHeight * app.globalData.rpxRate
   },
   methods: {
-    // 这里是一个自定义方法
+    //返回上一页
     _navback() {
       wx.navigateBack()
     },
